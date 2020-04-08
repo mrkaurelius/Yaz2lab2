@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button startCanvasButton = (Button) findViewById(R.id.startCanvas);
-        Button startOpenGLButton = (Button) findViewById(R.id.startOpenGL);
 
         startCanvasButton.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -31,13 +30,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        startOpenGLButton.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), OpenGLES20Activity.class);
-                startActivity(intent);
-            }
-        });
     }
 
 
