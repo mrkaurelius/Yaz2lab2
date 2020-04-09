@@ -4,26 +4,23 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Point;
 import android.text.TextPaint;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import androidx.core.content.ContextCompat;
-
-import com.example.yaz2lab2java.LetterRect;
-
 import java.util.ArrayList;
 
 // View for game
 class GameView extends View {
-    // TODO: encapsulate LetterRect in levels
-    // encapsulate game logic
+
+    //TODO: encapsulate LetterRect in levels
     // make okcircle smart (if true than color green else red)
     // game logic in Game class(controler)
+    // this activity starts and ends or resume with one level
+    // !!! Create Game with Control and Level (game has this classes as var)
+    // Game have Controller not GameView
 
     ArrayList<LetterRect> LetterRectList = new ArrayList<LetterRect>();
     Controller controller;
@@ -46,24 +43,15 @@ class GameView extends View {
         deviceDensity = getResources().getDisplayMetrics().density;
         LetterRect.density = this.deviceDensity;
 
+
+        Game game = new Game(0);
+
         paint.setColor(Color.BLUE);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(5*deviceDensity);
 
         textPaint.setColor(Color.BLACK);
         textPaint.setTextSize(16 * deviceDensity);
-
-        // crossword
-        LetterRectList.add(new LetterRect(0,0,'S'));
-        LetterRectList.add(new LetterRect(1,0,'E'));
-        LetterRectList.add(new LetterRect(2,0,'R'));
-        LetterRectList.add(new LetterRect(3,0,'R'));
-        LetterRectList.add(new LetterRect(4,0,'A'));
-        LetterRectList.add(new LetterRect(0,1,'K'));
-        LetterRectList.add(new LetterRect(0,2,'U'));
-        LetterRectList.add(new LetterRect(0,3,'M'));
-        LetterRectList.add(new LetterRect(0,4,'R'));
-        LetterRectList.add(new LetterRect(0,5,'U'));
 
         // controller
         int letterCircleCount = 3;
@@ -112,15 +100,18 @@ class GameView extends View {
         //draw crossword
         for (int i = 0; i < LetterRectList.size(); i++) {
             LetterRect lr = LetterRectList.get(i);
-            canvas.drawRect(lr.getRectangle(),LetterRect.paint);
+            canvas.drawRect(lr.getRectangle(),lr.getPaint());
             if (!lr.isVisible()){
-                canvas.drawText(lr.getC(), lr.getCenterX(), lr.getCenterY(), LetterRect.textPaint);
+                canvas.drawText(lr.getC(), lr.getCenterX(), lr.getCenterY(), lr.getTextPaint());
             }
         }
         //draw ok circle
         ControllerCircle oc = Controller.okCircle;
         canvas.drawCircle(oc.center.x,oc.center.y,oc.radius,oc.paint);
         canvas.drawText(oc.text,oc.center.x,oc.center.y,textPaint);
+        ControllerCircle sc = Controller.scrambleCircle;
+        canvas.drawCircle(sc.center.x,sc.center.y,sc.radius,sc.paint);
+        canvas.drawText(sc.text,sc.center.x,sc.center.y,textPaint);
 
         //draw sub circles
         for (int i = 0; i < Controller.subCircleList.size(); i++) {

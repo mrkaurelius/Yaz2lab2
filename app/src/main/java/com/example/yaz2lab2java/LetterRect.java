@@ -7,8 +7,6 @@ import android.text.TextPaint;
 import android.util.Log;
 
 class LetterRect{
-    // configure
-
     private static int EDGE_SIZE = 30;
     private static int MARGIN = 20;
 
@@ -20,8 +18,8 @@ class LetterRect{
     private Rect rectangle;
 
     public static float density;
-    public static Paint paint = new Paint();
-    public static TextPaint textPaint= new TextPaint();
+    public Paint paint = new Paint();
+    public TextPaint textPaint= new TextPaint();
 
     public LetterRect(int x, int y, char c){
         this.x = x;
@@ -51,15 +49,51 @@ class LetterRect{
 
     }
 
-    public Rect getRectangle(){ return  this.rectangle; }
+    public Rect getRectangle(){
+        return  this.rectangle;
+    }
 
-    public int getCenterX(){ return (this.rectangle.left + this.rectangle.right)/2; }
+    public int getCenterX(){
+        return (this.rectangle.left + this.rectangle.right)/2;
+    }
 
-    public int getCenterY(){ return (this.rectangle.top + this.rectangle.bottom)/2; }
+    public int getCenterY(){
+        return (this.rectangle.top + this.rectangle.bottom)/2;
+    }
 
-    public String getC(){ return String.valueOf(this.c); }
+    public String getC(){
+        return String.valueOf(this.c);
+    }
 
-    public boolean isVisible() { return visible; }
+    public boolean isVisible() {
+        return visible;
+    }
 
-    public void setVisible(boolean visible) { this.visible = visible; }
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public float getDensity() {
+        return density;
+    }
+
+    public void setDensity(float density) {
+        this.density = density;
+    }
+
+    public Paint getPaint() {
+        return paint;
+    }
+
+    public void setPaint(Paint paint) {
+        this.paint = paint;
+    }
+
+    public TextPaint getTextPaint() {
+        return textPaint;
+    }
+
+    public void setTextPaint(TextPaint textPaint) {
+        this.textPaint = textPaint;
+    }
 }

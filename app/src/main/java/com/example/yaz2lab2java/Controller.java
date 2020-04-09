@@ -1,13 +1,9 @@
 package com.example.yaz2lab2java;
 
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
-import android.text.TextPaint;
 
 import java.util.ArrayList;
-
-import javax.security.auth.Subject;
 
 // omit setter getters
 
@@ -15,13 +11,15 @@ public class Controller {
     //TODO:
     // access modifieres !!!
     // after all letters selected automaticly evaluate
+    // scrambleSubCircles
 
-    public static  String selectedLetters = "";
+    static  String selectedLetters = "";
+    static ControllerCircle okCircle;
+    static ControllerCircle scrambleCircle;
+    static ArrayList<ControllerCircle> subCircleList = new ArrayList<ControllerCircle>();
+
     // text point
     Point tp = new Point();
-
-    public static  ControllerCircle okCircle;
-    public static ArrayList<ControllerCircle> subCircleList = new ArrayList<ControllerCircle>();
 
     public Controller(String letters, float density){
         // dpi
@@ -35,11 +33,13 @@ public class Controller {
 
         int r = 160;
         okCircle = new ControllerCircle(c,r/2,"OK",Color.DKGRAY,density);
+        c.x = 80;
+        scrambleCircle = new ControllerCircle(c,(r/3),"KAR",Color.YELLOW,density);
 
         // width in dpi
-        int w = 410;
+        int w = 420;
         // left right margin
-        int lrmargin = 10;
+        int lrmargin = 0;
         //circle line
         int cline = w - 2*lrmargin;
         c.x = lrmargin;
@@ -55,5 +55,11 @@ public class Controller {
         }
 
     }
+
+    //TODO:
+    public static void scrambleSubCircles(){
+
+    }
+
 
 }
