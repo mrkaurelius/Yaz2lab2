@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
+
 import com.example.yaz2lab2java.LetterRect;
 
 import java.util.ArrayList;
@@ -19,6 +21,10 @@ import java.util.ArrayList;
 // View for game
 class GameView extends View {
     // TODO: encapsulate LetterRect in levels
+    // encapsulate game logic
+    // make okcircle smart (if true than color green else red)
+    // game logic in Game class(controler)
+
     ArrayList<LetterRect> LetterRectList = new ArrayList<LetterRect>();
     Controller controller;
 
@@ -28,7 +34,6 @@ class GameView extends View {
 
     Paint paint = new Paint();
     TextPaint textPaint= new TextPaint();
-    Path path = new Path();
 
     public GameView(Context context){
         super(context);
@@ -40,6 +45,13 @@ class GameView extends View {
 
         deviceDensity = getResources().getDisplayMetrics().density;
         LetterRect.density = this.deviceDensity;
+
+        paint.setColor(Color.BLUE);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(5*deviceDensity);
+
+        textPaint.setColor(Color.BLACK);
+        textPaint.setTextSize(16 * deviceDensity);
 
         // crossword
         LetterRectList.add(new LetterRect(0,0,'S'));
@@ -55,70 +67,84 @@ class GameView extends View {
 
         // controller
         int letterCircleCount = 3;
-        controller = new Controller("AAAAA", deviceDensity);
+        controller = new Controller("ABC", deviceDensity);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        // calculate if touch in circle
+
+        if (event.getAction() != MotionEvent.ACTION_DOWN ){
+            return  true;
+        }
 
         float x = event.getX();
         float y = event.getY();
         //path.addCircle(x,y,10*deviceDensity, Path.Direction.CW);
-        Log.d("TOUCH", "X:"+x+", Y:"+y);
+        Log.d("TOUCH", "X:" + x + ", Y:" + y);
+
+        // letter circles
         for (int i = 0; i < Controller.subCircleList.size(); i++) {
             ControllerCircle cc = Controller.subCircleList.get(i);
-            // TODO:
-            // check if touch in radius
-            // BURADA KALDIM
-            if (true) {
-                cc.paint.setColor(Color.MAGENTA);
+            if (inCircle(cc,x,y)) {
+                Controller.selectedLetters += cc.text;
+                cc.paint.setColor(Color.CYAN);
+                System.out.println(Controller.selectedLetters);
+                invalidate();
             }
         }
 
-        invalidate();
+        // ok circle
+        if(inCircle(Controller.okCircle,x,y)){
+            Controller.okCircle.paint.setColor(Color.GREEN);
+            invalidate();
+        }
+
         return true;
     }
 
+
+    //restructure
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        //canvas.drawColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
 
-
-        paint.setColor(Color.BLUE);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(5*deviceDensity);
-
-        textPaint.setColor(Color.BLACK);
-        textPaint.setTextSize(16 * deviceDensity);
-
-        canvas.drawPath(path,paint);
-
+        //draw crossword
         for (int i = 0; i < LetterRectList.size(); i++) {
             LetterRect lr = LetterRectList.get(i);
             canvas.drawRect(lr.getRectangle(),LetterRect.paint);
             if (!lr.isVisible()){
                 canvas.drawText(lr.getC(), lr.getCenterX(), lr.getCenterY(), LetterRect.textPaint);
             }
-
-
         }
-
-        //draw main circle
+        //draw ok circle
         ControllerCircle oc = Controller.okCircle;
-
         canvas.drawCircle(oc.center.x,oc.center.y,oc.radius,oc.paint);
+        canvas.drawText(oc.text,oc.center.x,oc.center.y,textPaint);
 
+        //draw sub circles
         for (int i = 0; i < Controller.subCircleList.size(); i++) {
             ControllerCircle c = Controller.subCircleList.get(i);
             canvas.drawCircle(c.center.x,c.center.y,c.radius,c.paint);
+            // draw letters
+            canvas.drawText(c.text,c.center.x,c.center.y,textPaint);
         }
+        // draw selected letters
 
-        // draw ok circle
+        canvas.drawText(controller.selectedLetters,controller.tp.x,controller.tp.y,textPaint);
+    }
 
-        // draw sub circles
 
-        // if touch event point and letter origin diff  < radius than touched
+    // touch x touch y circle c
+    private static boolean inCircle(ControllerCircle cc, float tx, float ty){
+        // distance between two point
+        double dist = Math.sqrt(Math.pow(cc.center.x - tx,2) + Math.pow(cc.center.y - ty,2));
+        if (dist < cc.radius) {
+            Log.d("INCIRCLE",cc.toString() + tx +","+ ty );
+            return true;
+        }
+        Log.d("INCIRCLE", "OUT");
+        return false;
 
     }
 

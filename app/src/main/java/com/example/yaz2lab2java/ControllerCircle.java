@@ -1,6 +1,5 @@
 package com.example.yaz2lab2java;
 
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.Log;
@@ -21,6 +20,7 @@ public class ControllerCircle {
         center.y *= density;
         radius = r * (int)density;
         paint.setColor(color);
+        paint.setAntiAlias(true);
         this.text = text;
 
         Log.d("CC", this.toString());
