@@ -13,7 +13,7 @@ class LetterRect{
     private int x;
     private int y;
     private char c;
-    private boolean visible;
+    public boolean visible;
 
     private Rect rectangle;
 

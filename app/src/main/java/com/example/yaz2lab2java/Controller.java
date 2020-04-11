@@ -10,19 +10,26 @@ import java.util.ArrayList;
 public class Controller {
     //TODO:
     // access modifieres !!!
-    // after all letters selected automaticly evaluate
-    // scrambleSubCircles
+    // after all letters selected automaticly evaluate in game logic
 
-    static  String selectedLetters = "";
-    static ControllerCircle okCircle;
-    static ControllerCircle scrambleCircle;
-    static ArrayList<ControllerCircle> subCircleList = new ArrayList<ControllerCircle>();
-
+    static String selectedLetters = "";
+    ControllerCircle okCircle;
+    ControllerCircle scrambleCircle;
+     ArrayList<ControllerCircle> subCircleList = new ArrayList<ControllerCircle>();
     // text point
     Point tp = new Point();
 
+    int letterCount;
+
+    //TODO:
+    public static void scrambleSubCircles(){
+
+    }
+
+
     public Controller(String letters, float density){
         // dpi
+        letterCount = letters.length();
         Point c = new Point();
         c.x = 205;
         c.y = 450;
@@ -32,7 +39,7 @@ public class Controller {
         tp.y = (int)(350 * density);
 
         int r = 160;
-        okCircle = new ControllerCircle(c,r/2,"OK",Color.DKGRAY,density);
+        okCircle = new ControllerCircle(c,r/2,"OK",Color.GRAY,density);
         c.x = 80;
         scrambleCircle = new ControllerCircle(c,(r/3),"KAR",Color.YELLOW,density);
 
@@ -55,11 +62,5 @@ public class Controller {
         }
 
     }
-
-    //TODO:
-    public static void scrambleSubCircles(){
-
-    }
-
 
 }

@@ -22,6 +22,7 @@ public class ControllerCircle {
         paint.setColor(color);
         paint.setAntiAlias(true);
         this.text = text;
+        this.density = density;
 
         Log.d("CC", this.toString());
     }
@@ -36,4 +37,6 @@ public class ControllerCircle {
                 ", density=" + density +
                 '}';
     }
+
+
 }

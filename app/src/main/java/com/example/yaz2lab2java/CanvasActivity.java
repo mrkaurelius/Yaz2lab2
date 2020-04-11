@@ -27,6 +27,8 @@ public class CanvasActivity extends AppCompatActivity {
 
         setContentView(new GameView(this));
     }
+
+
 }
 
 
