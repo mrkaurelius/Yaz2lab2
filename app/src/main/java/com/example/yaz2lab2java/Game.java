@@ -1,29 +1,29 @@
 package com.example.yaz2lab2java;
 
+import android.content.Context;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Game {
-
     //TODO:
     // game logic here
     // one game one level
 
     //public ArrayList<Level> levelList = new ArrayList<Level>();
 
-    long elapsedTime;
-    int wrongSubmits;
     static  float deviceDensity;
 
     SubLevel currentLevel;
     List<SubLevel> subLevelList = null;
     Controller controller = null;
 
+    long levelStartTime;
+    int wrongSubmits;
 
-
-    public Game(int level, int subLevel){
+    public Game(int level, int subLevel, Context context){
         switch (level) {
             case 1:
                 subLevelList =  InitialState.LEVEL_1.getSubLevels();
@@ -38,36 +38,46 @@ public class Game {
 
         subLevelList =  InitialState.LEVEL_1.getSubLevels();
         currentLevel = subLevelList.get(subLevel);
-        String letters = currentLevel.getLetters();
+        currentLevel.context = context;
+        currentLevel.initHighestScore();
 
+        String letters = currentLevel.getLetters();
+        levelStartTime = System.currentTimeMillis();
         // end current level controller string to Controller
         controller = new Controller(letters, deviceDensity);
     }
 
-    public boolean endSubLevel(){
-        // calc score wrong submits, time
-        // basepoint 100
-        // wrong submit 5
-        // 1 sec 0.5 minux
-        // TODO: calc score
-        int score = 0;
-        if(score > currentLevel.getHighestScore()){
-            currentLevel.setHighestScore(score);
-        }
+    //TODO: read files from file
+    public void initScores(){
 
-        if (currentLevel.level < subLevelList.size() - 1){
+    }
+
+    public void nextSubLevel(){
+        if (currentLevel.subLevel < subLevelList.size() - 1){
             // level index
-            currentLevel = subLevelList.get(currentLevel.level + 1);
+            // dirty !!
+            Context c = currentLevel.context;
+            currentLevel = subLevelList.get(currentLevel.subLevel + 1);
+            currentLevel.context = c;
+            currentLevel.initHighestScore();
+
+            levelStartTime = System.currentTimeMillis();
+            wrongSubmits = 0;
 
             controller = new Controller(currentLevel.letters, deviceDensity);
+        }
+    }
+
+    public boolean checkLevelEnd(){
+        if (currentLevel.subLevel < subLevelList.size() - 1){
             return false;
         }
         return true;
     }
 
-    public static boolean checkFinish(List<Word> wl){
+    public boolean checkEndSubLevel(List<Word> wl){
         for (int i = 0; i < wl.size(); i++) {
-            if (wl.get(i).solved == false){
+            if (!wl.get(i).solved){
                 return false;
             }
         }

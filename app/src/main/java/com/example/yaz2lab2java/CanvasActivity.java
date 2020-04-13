@@ -2,6 +2,7 @@ package com.example.yaz2lab2java;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
@@ -20,14 +21,25 @@ import android.os.Bundle;
 // , use colors for letters and upper text screen for word
 
 public class CanvasActivity extends AppCompatActivity {
+    // pas intent data
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(new GameView(this));
-    }
 
+        if (getIntent().hasExtra("LEVEL") && getIntent().hasExtra("SUBLEVEL")){
+            int level = getIntent().getIntExtra("LEVEL",1);
+            int subLevel = getIntent().getIntExtra("SUBLEVEL",0);
+
+            setContentView(new GameView(this,level,subLevel));
+        } else {
+            setContentView(new GameView(this));
+        }
+
+    }
 
 }
 

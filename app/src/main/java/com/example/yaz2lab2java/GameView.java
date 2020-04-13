@@ -15,6 +15,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 // View for game
 class GameView extends View {
@@ -29,16 +30,33 @@ class GameView extends View {
     // ArrayList<LetterRect> LetterRectList = new ArrayList<LetterRect>();
     // Controller controller;
 
-    float deviceDensity;
-
+    static  float deviceDensity;
     static  Paint paint = new Paint();
     static  TextPaint textPaint= new TextPaint();
 
     Game game;
-    boolean endSublevel=false;
+    boolean endSubLevel=false;
     boolean endLevel=false;
 
+
+
     public GameView(Context context){
+        super(context);
+
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        Log.i("METRICS", metrics.toString());
+
+        deviceDensity = getResources().getDisplayMetrics().density;
+        LetterRect.density = this.deviceDensity;
+        Game.deviceDensity = deviceDensity;
+
+        setGameViewColors();
+        game = new Game(1, 0,context);
+        Activity activity = (Activity) getContext();
+    }
+
+    public GameView(Context context, int level, int subLevel){
         super(context);
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
@@ -49,7 +67,8 @@ class GameView extends View {
         Game.deviceDensity = deviceDensity;
 
         setGameViewColors();
-        game = new Game(1, 0);
+        game = new Game(level, subLevel,context);
+        Activity activity = (Activity) getContext();
 
     }
 
@@ -115,29 +134,29 @@ class GameView extends View {
                         //TODO: end game and give score
                         // change game sub level with smart way
                         // if sublevels finished go back main activity
-                        if (Game.checkFinish(wl)){
-                            Log.d("GAME", "Sublevel ended");
-                            endSublevel = true;
-                            endLevel = game.endSubLevel();
 
+                        endSubLevel = game.checkEndSubLevel(wl);
+                        if (endSubLevel){
+                            Log.d("GAME", "Sublevel ended");
+
+                            endLevel = game.checkLevelEnd();
                             if (endLevel){
                                 Log.d("GAME", "Level ended");
                                 // end activity
-
                             }
-                            invalidate();
+                            //invalidate();
                             return true;
                             // game = new Game(1,1);
                         }
                     }
                     invalidate();
                     return true;
-
                 }
             }
 
             Controller.selectedLetters = "";
             ctrl.okCircle.paint.setColor(Color.RED);
+            game.wrongSubmits++;
             invalidate();
         }
 
@@ -150,31 +169,42 @@ class GameView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         //canvas.drawColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-        // BURADA KALDIM
-        if (endLevel){
-            // draw end level stuff end activity
-            Activity activity = (Activity) getContext();
-            activity.finish();
-        }
 
+        if (endSubLevel){
+            //draw levelMetrics
+            // level transition effect
+            Log.d("DRAW", "DRAWMETRICS");
 
-        if (endSublevel){
-            // draw end sublevel stuff
+            long elapsedTime = (System.currentTimeMillis() - game.levelStartTime) / 1000;
+            int wrongSubmits = game.wrongSubmits;
 
-            canvas.drawColor(Color.WHITE);
+            int score = 0;
+            score = 100 - (wrongSubmits * 5)  - (int)(elapsedTime * 2);
+            drawLevelMetrics(canvas, wrongSubmits,elapsedTime, score);
+
+            if(game.currentLevel.highestScore < score) game.currentLevel.setHighestScore(getContext(),score);
+
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void  run() {
                     // dirty !
+                    endSubLevel = false;
+                    game.nextSubLevel();
                     invalidate();
-                    endSublevel = false;
                 }
             }, 3000);
+
             return;
         }
 
 
+        if (endLevel){
+            // draw end level stuff end activity
+            Activity activity = (Activity) getContext();
+            activity.finish();
+            return;
+        }
 
         //draw crossword
         drawSubLevel(canvas, game.getCurrentLevel());
@@ -202,7 +232,25 @@ class GameView extends View {
         canvas.drawText(c.selectedLetters,c.tp.x,c.tp.y,textPaint);
     }
 
-    public static void drawSubLevelIntro (Canvas canvas){
+    // TODO: level metrics
+    public void drawLevelMetrics (Canvas canvas,int wrongSubmits,long elapsedTime, int score){
+        String ws = String.valueOf(wrongSubmits);
+        String et = String.valueOf(elapsedTime);
+        String s = String.valueOf(score);
+
+        //Log.d("TIME","elapsed " + et );
+        //Log.d("TIME", "current " + current );
+        //Log.d("TIME", "start " + start);
+
+
+        canvas.drawText("WrongSubmits",50*deviceDensity,300*deviceDensity,textPaint);
+        canvas.drawText(ws,50*deviceDensity,320*deviceDensity,textPaint);
+
+        canvas.drawText("ElapsedTime",180*deviceDensity,300*deviceDensity,textPaint);
+        canvas.drawText(et,180*deviceDensity,320*deviceDensity,textPaint);
+        // calc and set score
+        canvas.drawText("Score",300*deviceDensity,300*deviceDensity,textPaint);
+        canvas.drawText(s,300*deviceDensity,320*deviceDensity,textPaint);
     }
 
     public static void drawSubLevel(Canvas canvas, SubLevel subLevel){

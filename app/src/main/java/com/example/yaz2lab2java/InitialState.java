@@ -16,7 +16,7 @@ public enum InitialState implements LevelSettings{
     LEVEL_1 {
         @Override
         public List<SubLevel> getSubLevels() {
-            SubLevel sl1 = new SubLevel(0);
+            SubLevel sl1 = new SubLevel(1,0);
             Word w1 = new Word("ÇAM");
             Word w2 = new Word("MAÇ");
             // ambiguous method name !!!
@@ -39,7 +39,7 @@ public enum InitialState implements LevelSettings{
             sl1.getWordList().add(w1);
             sl1.getWordList().add(w2);
 
-            SubLevel sl2 =  new SubLevel(1);
+            SubLevel sl2 =  new SubLevel(1,1);
             Word w3 = new Word("TUŞ");
             Word w4 = new Word("ŞUT");
             // ambiguous method name !!!
@@ -68,16 +68,16 @@ public enum InitialState implements LevelSettings{
     LEVEL_2 {
         @Override
         public List<SubLevel> getSubLevels() {
-            SubLevel g1 = new SubLevel(1);
-            SubLevel g2 = new SubLevel(1);
+            SubLevel g1 = new SubLevel(2,0);
+            SubLevel g2 = new SubLevel(2,1);
             return Arrays.asList(g1, g2);
         }
     },
     LEVEL_3 {
         @Override
         public List<SubLevel> getSubLevels() {
-            SubLevel g1 = new SubLevel(1);
-            SubLevel g2 = new SubLevel(1);
+            SubLevel g1 = new SubLevel(3,0);
+            SubLevel g2 = new SubLevel(3,1);
             return Arrays.asList(g1, g2);
         }
     };
