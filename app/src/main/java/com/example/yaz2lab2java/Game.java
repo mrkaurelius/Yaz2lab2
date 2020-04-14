@@ -1,6 +1,8 @@
 package com.example.yaz2lab2java;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ public class Game {
         currentLevel = subLevelList.get(subLevel);
         currentLevel.context = context;
         currentLevel.initHighestScore();
+        setResumeLevel();
 
         String letters = currentLevel.getLetters();
         levelStartTime = System.currentTimeMillis();
@@ -47,9 +50,15 @@ public class Game {
         controller = new Controller(letters, deviceDensity);
     }
 
-    //TODO: read files from file
-    public void initScores(){
+    public void setResumeLevel(){
+        SharedPreferences scores = currentLevel.
+                context.getSharedPreferences("ResumeLevel", Context.MODE_PRIVATE);
 
+        SharedPreferences.Editor edit = scores.edit();
+        String s = currentLevel.level+"-"+currentLevel.subLevel;
+        edit.putString("resume-level", s);
+        Log.d("RESUMELEVEL", s);
+        edit.commit();
     }
 
     public void nextSubLevel(){
@@ -60,6 +69,7 @@ public class Game {
             currentLevel = subLevelList.get(currentLevel.subLevel + 1);
             currentLevel.context = c;
             currentLevel.initHighestScore();
+            setResumeLevel();
 
             levelStartTime = System.currentTimeMillis();
             wrongSubmits = 0;

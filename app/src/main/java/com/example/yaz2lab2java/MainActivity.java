@@ -8,28 +8,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.Map;
+import java.util.logging.Level;
 
 public class MainActivity extends AppCompatActivity {
 
     //TODO: Orginanise Classes with subdirs(package)
-
-    //TODO: Game Menu
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // set sharedvalues
-        SharedPreferences scores = getSharedPreferences("HighScores", MODE_PRIVATE);
+        // TODO: show highscore dinamically
+        // TODO: set current level
 
-        TextView sc2 = (TextView) findViewById(R.id.textView2);
-        TextView sc3 = (TextView) findViewById(R.id.textView3);
-
-        sc2.setText("Level 1, 0 " + scores.getString("L1-0", ""));
-        sc3.setText("Level 1, 1 " + scores.getString("L1-1", ""));
-
+        setHighScoreTextView();
 
         Button startCanvasButton = (Button) findViewById(R.id.startCanvas);
         Button resume = (Button) findViewById(R.id.resume);
@@ -59,16 +56,38 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences scores = getSharedPreferences("HighScores", MODE_PRIVATE);
-
-        TextView sc2 = (TextView) findViewById(R.id.textView2);
-        TextView sc3 = (TextView) findViewById(R.id.textView3);
-
-        sc2.setText("Level 1, 0 " + scores.getString("L1-0", ""));
-        sc3.setText("Level 1, 1 " + scores.getString("L1-1", ""));
+        setHighScoreTextView();
 
         Log.d("ACTIVITY", "onResume worked");
 
     }
+
+    public void setHighScoreTextView(){
+
+        LinearLayout linearLayout= (LinearLayout) findViewById(R.id.linearLayout);
+        linearLayout.removeAllViews();
+
+        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+
+        SharedPreferences scores = getSharedPreferences("HighScores", MODE_PRIVATE);
+
+        Map<String, ?> map = scores.getAll();
+
+        for (Map.Entry<String, ?> entry : map.entrySet()) {
+                Log.d("SH_MAP", entry.getKey() + ": " + entry.getValue().toString());
+                TextView tv = new TextView(this);
+                tv.setLayoutParams(lparams);
+                tv.setText("Leve" + entry.getKey() +" "+ scores.getString("L1-0", ""));
+                linearLayout.addView(tv);
+        }
+
+
+
+
+
+    }
+
 }
 
