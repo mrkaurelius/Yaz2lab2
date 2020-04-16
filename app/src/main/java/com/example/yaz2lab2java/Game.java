@@ -38,7 +38,6 @@ public class Game {
                 break;
         }
 
-        subLevelList =  InitialState.LEVEL_1.getSubLevels();
         currentLevel = subLevelList.get(subLevel);
         currentLevel.context = context;
         currentLevel.initHighestScore();
@@ -55,9 +54,10 @@ public class Game {
                 context.getSharedPreferences("ResumeLevel", Context.MODE_PRIVATE);
 
         SharedPreferences.Editor edit = scores.edit();
-        String s = currentLevel.level+"-"+currentLevel.subLevel;
-        edit.putString("resume-level", s);
-        Log.d("RESUMELEVEL", s);
+
+        edit.putInt("level",currentLevel.level);
+        edit.putInt("sublevel",currentLevel.subLevel);
+        Log.d("RESUMELEVEL", "level: "+currentLevel.level+" sublevel: "+currentLevel.subLevel);
         edit.commit();
     }
 

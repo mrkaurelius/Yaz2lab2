@@ -21,11 +21,7 @@ import java.util.logging.Level;
 class GameView extends View {
 
     //TODO: encapsulate LetterRect in levels
-    // make okcircle smart (if true than color green else red)
-    // game logic in Game class(controler)
     // this activity starts and ends or resume with one level
-    // !!! Create Game with Control and Level (game has this classes as var)
-    // Game have Controller not GameView
 
     // ArrayList<LetterRect> LetterRectList = new ArrayList<LetterRect>();
     // Controller controller;
@@ -43,7 +39,6 @@ class GameView extends View {
     public GameView(Context context){
         super(context);
 
-
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         Log.i("METRICS", metrics.toString());
 
@@ -53,7 +48,6 @@ class GameView extends View {
 
         setGameViewColors();
         game = new Game(1, 0,context);
-        Activity activity = (Activity) getContext();
     }
 
     public GameView(Context context, int level, int subLevel){
@@ -68,8 +62,6 @@ class GameView extends View {
 
         setGameViewColors();
         game = new Game(level, subLevel,context);
-        Activity activity = (Activity) getContext();
-
     }
 
     @Override

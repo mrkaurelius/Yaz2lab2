@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 
 //TODO:
@@ -33,6 +34,7 @@ public class CanvasActivity extends AppCompatActivity {
         if (getIntent().hasExtra("LEVEL") && getIntent().hasExtra("SUBLEVEL")){
             int level = getIntent().getIntExtra("LEVEL",1);
             int subLevel = getIntent().getIntExtra("SUBLEVEL",0);
+            Log.d("CANVASCREATE", "level "+level+", sublevel: "+subLevel);
 
             setContentView(new GameView(this,level,subLevel));
         } else {

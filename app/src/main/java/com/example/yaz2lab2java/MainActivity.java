@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Map;
-import java.util.logging.Level;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,14 +27,36 @@ public class MainActivity extends AppCompatActivity {
 
         setHighScoreTextView();
 
-        Button startCanvasButton = (Button) findViewById(R.id.startCanvas);
+        Button level1 = (Button) findViewById(R.id.level1);
+        Button level2 = (Button) findViewById(R.id.level2);
+        Button level3 = (Button) findViewById(R.id.level3);
+
         Button resume = (Button) findViewById(R.id.resume);
 
-        startCanvasButton.setOnClickListener( new View.OnClickListener() {
+        level1.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), CanvasActivity.class);
                 // start activity for result ??
+                startActivity(intent);
+            }
+        });
+
+        level2.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CanvasActivity.class);
+                intent.putExtra("LEVEL", 2);
+                intent.putExtra("SUBLEVEL", 0);
+                startActivity(intent);
+            }
+        });
+        level3.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CanvasActivity.class);
+                intent.putExtra("LEVEL", 3);
+                intent.putExtra("SUBLEVEL", 0);
                 startActivity(intent);
             }
         });
@@ -45,9 +66,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), CanvasActivity.class);
                 // start activity for result ??
-                // TODO: read data from file
-                intent.putExtra("LEVEL", 1);
-                intent.putExtra("SUBLEVEL", 1);
+                // TODO: read data from shared
+                SharedPreferences resume = getSharedPreferences("ResumeLevel", MODE_PRIVATE);
+                int level = resume.getInt("level",1);
+                int subLevel = resume.getInt("sublevel",0);
+
+                intent.putExtra("LEVEL", level);
+                intent.putExtra("SUBLEVEL", subLevel);
                 startActivity(intent);
             }
         });
@@ -79,12 +104,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("SH_MAP", entry.getKey() + ": " + entry.getValue().toString());
                 TextView tv = new TextView(this);
                 tv.setLayoutParams(lparams);
-                tv.setText("Leve" + entry.getKey() +" "+ scores.getString("L1-0", ""));
+                tv.setText("Leve" + entry.getKey() +" "+ scores.getString(entry.getKey(), ""));
                 linearLayout.addView(tv);
         }
-
-
-
 
 
     }

@@ -68,17 +68,59 @@ public enum InitialState implements LevelSettings{
     LEVEL_2 {
         @Override
         public List<SubLevel> getSubLevels() {
-            SubLevel g1 = new SubLevel(2,0);
-            SubLevel g2 = new SubLevel(2,1);
-            return Arrays.asList(g1, g2);
+            SubLevel sl1 = new SubLevel(2,0);
+            Word w1 = new Word("ÇAM");
+            Word w2 = new Word("MAÇ");
+            // ambiguous method name !!!
+            sl1.setLetters("AMÇA");
+
+            List<LetterRect> lr1 = w1.getLetterRects();
+            List<LetterRect> lr2 = w2.getLetterRects();
+
+            lr1.add(new LetterRect(4,4,'Ç'));
+            lr1.add(new LetterRect(5,4,'A'));
+            lr1.add(new LetterRect(6,4,'M'));
+
+            lr2.add(new LetterRect(5,3,'M'));
+            lr2.add(new LetterRect(5,4,'A'));
+            lr2.add(new LetterRect(5,5,'Ç'));
+
+            w1.setLetterRects(lr1);
+            w2.setLetterRects(lr2);
+
+            sl1.getWordList().add(w1);
+            sl1.getWordList().add(w2);
+
+            return Arrays.asList(sl1);
         }
     },
     LEVEL_3 {
         @Override
         public List<SubLevel> getSubLevels() {
-            SubLevel g1 = new SubLevel(3,0);
-            SubLevel g2 = new SubLevel(3,1);
-            return Arrays.asList(g1, g2);
+            SubLevel sl1 = new SubLevel(3,0);
+            Word w1 = new Word("ÇAM");
+            Word w2 = new Word("MAÇ");
+            // ambiguous method name !!!
+            sl1.setLetters("AMÇAA");
+
+            List<LetterRect> lr1 = w1.getLetterRects();
+            List<LetterRect> lr2 = w2.getLetterRects();
+
+            lr1.add(new LetterRect(4,4,'Ç'));
+            lr1.add(new LetterRect(5,4,'A'));
+            lr1.add(new LetterRect(6,4,'M'));
+
+            lr2.add(new LetterRect(5,3,'M'));
+            lr2.add(new LetterRect(5,4,'A'));
+            lr2.add(new LetterRect(5,5,'Ç'));
+
+            w1.setLetterRects(lr1);
+            w2.setLetterRects(lr2);
+
+            sl1.getWordList().add(w1);
+            sl1.getWordList().add(w2);
+
+            return Arrays.asList(sl1);
         }
     };
 }
