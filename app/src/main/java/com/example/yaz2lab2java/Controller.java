@@ -15,7 +15,7 @@ public class Controller {
     static String selectedLetters = "";
     ControllerCircle okCircle;
     ControllerCircle scrambleCircle;
-     ArrayList<ControllerCircle> subCircleList = new ArrayList<ControllerCircle>();
+    ArrayList<ControllerCircle> subCircleList = new ArrayList<ControllerCircle>();
     // text point
     Point tp = new Point();
 

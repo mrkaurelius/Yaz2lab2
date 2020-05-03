@@ -7,28 +7,44 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="411dp"
-        android:layout_height="373dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="407dp"
-        android:layout_height="230dp"
-        android:layout_marginTop="5dp"
+        android:layout_width="406dp"
+        android:layout_height="317dp"
+        android:layout_marginTop="375dp"
         android:layout_marginBottom="40dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/golevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="go level" />
+
+            <EditText
+                android:id="@+id/level"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/sublevel"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="number" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/resume"
@@ -53,6 +69,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="LEVEL 3 " />
+
+        <Button
+            android:id="@+id/highscore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HIGHSCORE" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

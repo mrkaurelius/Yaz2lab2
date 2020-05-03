@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Map;
 
@@ -25,13 +27,13 @@ public class MainActivity extends AppCompatActivity {
         // TODO: show highscore dinamically
         // TODO: set current level
 
-        setHighScoreTextView();
-
         Button level1 = (Button) findViewById(R.id.level1);
         Button level2 = (Button) findViewById(R.id.level2);
         Button level3 = (Button) findViewById(R.id.level3);
 
         Button resume = (Button) findViewById(R.id.resume);
+        Button highScore = (Button) findViewById(R.id.highscore);
+        Button goLevel = (Button) findViewById(R.id.golevel);
 
         level1.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -76,40 +78,44 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setHighScoreTextView();
+        highScore.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), HighScore.class);
+                startActivity(intent);
+            }
+        });
 
-        Log.d("ACTIVITY", "onResume worked");
+        goLevel.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CanvasActivity.class);
+                //read from input
+                EditText levelEdit = (EditText) findViewById(R.id.level);
+                EditText subLevelEdit = (EditText) findViewById(R.id.sublevel);
 
-    }
+                if (levelEdit.getText().toString().length() > 0 && subLevelEdit.getText().toString().length() > 0){
+                    int level = Integer.parseInt(levelEdit.getText().toString());
+                    int subLevel = Integer.parseInt(subLevelEdit.getText().toString());
 
-    public void setHighScoreTextView(){
+                    Toast.makeText(MainActivity.this, level + "," + subLevel,
+                            Toast.LENGTH_LONG).show();
 
-        LinearLayout linearLayout= (LinearLayout) findViewById(R.id.linearLayout);
-        linearLayout.removeAllViews();
+                    intent.putExtra("LEVEL", level);
+                    intent.putExtra("SUBLEVEL", subLevel);
+                    startActivity(intent);
 
-        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                } else {
+                    Toast.makeText(MainActivity.this, "Hatalı girdi!",
+                            Toast.LENGTH_LONG).show();
+                }
 
 
-        SharedPreferences scores = getSharedPreferences("HighScores", MODE_PRIVATE);
-
-        Map<String, ?> map = scores.getAll();
-
-        for (Map.Entry<String, ?> entry : map.entrySet()) {
-                Log.d("SH_MAP", entry.getKey() + ": " + entry.getValue().toString());
-                TextView tv = new TextView(this);
-                tv.setLayoutParams(lparams);
-                tv.setText("Leve" + entry.getKey() +" "+ scores.getString(entry.getKey(), ""));
-                linearLayout.addView(tv);
-        }
+            }
+        });
 
 
     }
 
 }
-

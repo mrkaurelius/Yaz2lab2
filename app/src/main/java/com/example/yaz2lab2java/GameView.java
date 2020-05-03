@@ -15,6 +15,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 
 // View for game
@@ -152,6 +153,36 @@ class GameView extends View {
             invalidate();
         }
 
+        ControllerCircle sc = game.controller.scrambleCircle;
+
+        if (inCircle(sc,x,y)){
+            Random rand = new Random();
+            int listSize = game.controller.subCircleList.size();
+            int rand1;
+            int rand2;
+            do {
+                 rand1 = rand.nextInt(listSize);
+                 rand2 = rand.nextInt(listSize);
+            } while(rand1 == rand2);
+
+            Log.d("RAND", ""+rand1);
+            Log.d("RAND", ""+rand2);
+
+            String tmp;
+            tmp = game.controller.subCircleList.get(rand1).text;
+            game.controller.subCircleList.get(rand1).text =
+                    game.controller.subCircleList.get(rand2).text;
+            game.controller.subCircleList.get(rand2).text = tmp;
+
+            for (int i = 0; i < game.controller.subCircleList.size() ; i++) {
+                System.out.println(game.controller.subCircleList.get(i).toString());
+
+            }
+
+            Log.d("SCRAMBLE", "DRAWMETRICS");
+            invalidate();
+        }
+
 
         return true;
     }
@@ -202,11 +233,12 @@ class GameView extends View {
         drawSubLevel(canvas, game.getCurrentLevel());
 
         //draw ok circle
-        // !!! Oxymoron here static there settergetter
         Controller ctrl = game.getController();
+
         ControllerCircle oc = ctrl.okCircle;
         canvas.drawCircle(oc.center.x,oc.center.y,oc.radius,oc.paint);
         canvas.drawText(oc.text,oc.center.x,oc.center.y,textPaint);
+
         ControllerCircle sc = ctrl.scrambleCircle;
         canvas.drawCircle(sc.center.x,sc.center.y,sc.radius,sc.paint);
         canvas.drawText(sc.text,sc.center.x,sc.center.y,textPaint);
