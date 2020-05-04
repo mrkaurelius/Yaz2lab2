@@ -95,19 +95,20 @@ public class MainActivity extends AppCompatActivity {
                 EditText levelEdit = (EditText) findViewById(R.id.level);
                 EditText subLevelEdit = (EditText) findViewById(R.id.sublevel);
 
-                if (levelEdit.getText().toString().length() > 0 && subLevelEdit.getText().toString().length() > 0){
+                if ((levelEdit.getText().toString().length() > 0 && subLevelEdit.getText().toString().length() > 0)){
                     int level = Integer.parseInt(levelEdit.getText().toString());
                     int subLevel = Integer.parseInt(subLevelEdit.getText().toString());
-
-                    Toast.makeText(MainActivity.this, level + "," + subLevel,
-                            Toast.LENGTH_LONG).show();
-
-                    intent.putExtra("LEVEL", level);
-                    intent.putExtra("SUBLEVEL", subLevel);
-                    startActivity(intent);
+                    if (level > 3 || subLevel > 5){
+                        Toast.makeText(MainActivity.this, "Level 1-3 Sublevel 0-5 arası olabilir",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        intent.putExtra("LEVEL", level);
+                        intent.putExtra("SUBLEVEL", subLevel);
+                        startActivity(intent);
+                    }
 
                 } else {
-                    Toast.makeText(MainActivity.this, "Hatalı girdi!",
+                    Toast.makeText(MainActivity.this, "Level ve Sublevel boş olmamalı",
                             Toast.LENGTH_LONG).show();
                 }
 

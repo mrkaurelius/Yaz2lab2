@@ -28,13 +28,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="go level" />
+                android:text="levele git" />
 
             <EditText
                 android:id="@+id/level"
                 android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:hint="Level"
                 android:inputType="number" />
 
             <EditText
@@ -43,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:hint="Altlevel"
                 android:inputType="number" />
         </LinearLayout>
 
@@ -50,7 +52,7 @@
             android:id="@+id/resume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RESUME" />
+            android:text="devam et" />
 
         <Button
             android:id="@+id/level1"
@@ -74,7 +76,7 @@
             android:id="@+id/highscore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="HIGHSCORE" />
+            android:text="yüksek skor" />
 
     </LinearLayout>
 

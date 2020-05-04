@@ -83,7 +83,7 @@ class GameView extends View {
             ControllerCircle cc = ctrl.subCircleList.get(i);
             if (inCircle(cc,x,y)) {
                 Controller.selectedLetters += cc.text;
-                cc.paint.setColor(Color.CYAN);
+                //cc.paint.setColor(Color.CYAN);
                 System.out.println(Controller.selectedLetters);
                 invalidate();
             }
@@ -202,7 +202,7 @@ class GameView extends View {
             int wrongSubmits = game.wrongSubmits;
 
             int score = 0;
-            score = 100 - (wrongSubmits * 5)  - (int)(elapsedTime * 2);
+            score = 200 - (wrongSubmits * 5)  - (int)(elapsedTime * 2);
             drawLevelMetrics(canvas, wrongSubmits,elapsedTime, score);
 
             if(game.currentLevel.highestScore < score) game.currentLevel.setHighestScore(getContext(),score);

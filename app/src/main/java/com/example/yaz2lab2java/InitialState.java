@@ -156,6 +156,68 @@ public enum InitialState implements LevelSettings{
                 sl5.getWordList().add(w3);
             }
 
+            SubLevel sl6 =  new SubLevel(1,5);
+            {
+                Word w1 = new Word("ARDA");
+                Word w2 = new Word("ARA");
+                Word w3 = new Word("ADA");
+                Word w4 = new Word("DAMA");
+                Word w5 = new Word("RADAR");
+                Word w6 = new Word("DAR");
+
+                sl6.setLetters("DARM");
+
+                List<LetterRect> lr1 = w1.getLetterRects();
+                List<LetterRect> lr2 = w2.getLetterRects();
+                List<LetterRect> lr3 = w3.getLetterRects();
+                List<LetterRect> lr4 = w4.getLetterRects();
+                List<LetterRect> lr5 = w5.getLetterRects();
+                List<LetterRect> lr6 = w6.getLetterRects();
+
+
+                lr1.add(new LetterRect(2,1,'A'));
+                lr1.add(new LetterRect(3,1,'R'));
+                lr1.add(new LetterRect(4,1,'D'));
+                lr1.add(new LetterRect(5,1,'A'));
+
+                lr2.add(new LetterRect(1,2,'A'));
+                lr2.add(new LetterRect(1,3,'R'));
+                lr2.add(new LetterRect(1,4,'A'));
+
+                lr3.add(new LetterRect(1,4,'A'));
+                lr3.add(new LetterRect(2,4,'D'));
+                lr3.add(new LetterRect(3,4,'A'));
+
+                lr4.add(new LetterRect(7,2,'D'));
+                lr4.add(new LetterRect(7,3,'A'));
+                lr4.add(new LetterRect(7,4,'M'));
+                lr4.add(new LetterRect(7,5,'A'));
+
+                lr5.add(new LetterRect(3,1,'R'));
+                lr5.add(new LetterRect(3,2,'A'));
+                lr5.add(new LetterRect(3,3,'D'));
+                lr5.add(new LetterRect(3,4,'A'));
+                lr5.add(new LetterRect(3,5,'R'));
+
+                lr6.add(new LetterRect(3,3,'D'));
+                lr6.add(new LetterRect(4,3,'A'));
+                lr6.add(new LetterRect(5,3,'R'));
+
+                w1.setLetterRects(lr1);
+                w2.setLetterRects(lr2);
+                w3.setLetterRects(lr3);
+                w4.setLetterRects(lr4);
+                w5.setLetterRects(lr5);
+                w6.setLetterRects(lr6);
+
+                sl6.getWordList().add(w1);
+                sl6.getWordList().add(w2);
+                sl6.getWordList().add(w3);
+                sl6.getWordList().add(w4);
+                sl6.getWordList().add(w5);
+                sl6.getWordList().add(w6);
+            }
+
             return Arrays.asList(sl1,sl2,sl3,sl4,sl5);
         }
     },
@@ -512,9 +574,9 @@ public enum InitialState implements LevelSettings{
                 lr1.add(new LetterRect(4,1,'O'));
                 lr1.add(new LetterRect(5,1,'N'));
 
-                lr2.add(new LetterRect(3,1,'S'));
-                lr2.add(new LetterRect(3,2,'A'));
-                lr2.add(new LetterRect(3,3,'Ğ'));
+                lr2.add(new LetterRect(1,3,'S'));
+                lr2.add(new LetterRect(1,4,'A'));
+                lr2.add(new LetterRect(1,5,'Ğ'));
 
                 lr3.add(new LetterRect(1,3,'S'));
                 lr3.add(new LetterRect(2,3,'O'));
@@ -597,6 +659,7 @@ public enum InitialState implements LevelSettings{
                 Word w4 = new Word("DAMA");
                 Word w5 = new Word("RADAR");
                 Word w6 = new Word("DAR");
+                Word w7 = new Word("DARI");
 
                 sl5.setLetters("IDARM");
 
@@ -606,6 +669,7 @@ public enum InitialState implements LevelSettings{
                 List<LetterRect> lr4 = w4.getLetterRects();
                 List<LetterRect> lr5 = w5.getLetterRects();
                 List<LetterRect> lr6 = w6.getLetterRects();
+                List<LetterRect> lr7 = w7.getLetterRects();
 
 
                 lr1.add(new LetterRect(2,1,'A'));
@@ -636,12 +700,18 @@ public enum InitialState implements LevelSettings{
                 lr6.add(new LetterRect(4,3,'A'));
                 lr6.add(new LetterRect(5,3,'R'));
 
+                lr7.add(new LetterRect(9,2,'D'));
+                lr7.add(new LetterRect(9,3,'A'));
+                lr7.add(new LetterRect(9,4,'R'));
+                lr7.add(new LetterRect(9,5,'I'));
+
                 w1.setLetterRects(lr1);
                 w2.setLetterRects(lr2);
                 w3.setLetterRects(lr3);
                 w4.setLetterRects(lr4);
                 w5.setLetterRects(lr5);
                 w6.setLetterRects(lr6);
+                w7.setLetterRects(lr7);
 
                 sl5.getWordList().add(w1);
                 sl5.getWordList().add(w2);
@@ -649,6 +719,7 @@ public enum InitialState implements LevelSettings{
                 sl5.getWordList().add(w4);
                 sl5.getWordList().add(w5);
                 sl5.getWordList().add(w6);
+                sl5.getWordList().add(w7);
             }
 
             SubLevel sl6 = new SubLevel(3,5);
@@ -669,7 +740,7 @@ public enum InitialState implements LevelSettings{
                 List<LetterRect> lr4 = w4.getLetterRects();
                 List<LetterRect> lr5 = w5.getLetterRects();
                 List<LetterRect> lr6 = w6.getLetterRects();
-                List<LetterRect> lr7 = w6.getLetterRects();
+                List<LetterRect> lr7 = w7.getLetterRects();
 
                 lr1.add(new LetterRect(2,1,'İ'));
                 lr1.add(new LetterRect(3,1,'B'));
